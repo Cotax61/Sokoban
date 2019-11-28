@@ -12,5 +12,6 @@ int game_loop(char **map, char **save);
 int check_map(char **map);
 char *read_file(char *file_path);
 char **make_map_from_buffer(char *buffer);
+int check_map_char(char **map);
 
 #endif

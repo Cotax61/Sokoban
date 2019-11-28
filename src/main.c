@@ -43,7 +43,7 @@ void display_end_msg(int msg_id)
 
 void init_game(char **map, char **save, char *buffer)
 {
-    if (!check_map(map)) {
+    if (!check_map(map) || !check_map_char(map)) {
         my_free_array(map);
         free(buffer);
         exit (84);

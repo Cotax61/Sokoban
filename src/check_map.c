@@ -24,6 +24,23 @@ static void invalid_map_message(int *tab)
         my_put_error("The map contains more than one player !\n");
 }
 
+int check_map_char(char **map)
+{
+    int line = 0;
+
+    for (int i = 0; map[line] != NULL; i++) {
+        if (!my_haschar(map[line][i], " #XOP\n")) {
+            my_put_error("The map contain an invalid character !\n");
+            return (0);
+        }
+        if (map[line][i] == '\0' || map[line][i] == '\n') {
+            i = -1;
+            line++;
+        }
+    }
+    return (1);
+}
+
 int check_map(char **map)
 {
     int tab[] = {0, 0, 0};
