@@ -16,5 +16,7 @@ void move_up(char **map, pos_t *pos);
 void move_right(char **map, pos_t *pos);
 void move_left(char **map, pos_t *pos);
 int check_game_status(char **map, char **save);
+char **make_map_from_buffer(char *buffer);
+void display_map(char **array);
 
 #endif

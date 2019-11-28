@@ -10,8 +10,10 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
-void show_help(void)
+void show_help(int ac, char **av)
 {
+    if (my_strcmp(av[1], "-h") == 0)
+        return;
     my_putstr("USAGE\n");
     my_putstr("    ./my_sokoban map\n");
     my_putstr("DESCRIPTION\n");
@@ -60,16 +62,15 @@ int main(int ac, char **av)
 
     if (ac < 1)
         return (84);
-    else if (my_strcmp(av[1], "-h") == 0) {
-        show_help();
-        return (0);
-    }
+    show_help(ac, av);
     buffer = read_file(av[1]);
     map = make_map_from_buffer(buffer);
     init_game(map, save, buffer);
     save = make_map_from_buffer(buffer);
-    ret = game_loop(map, save);
+    ret = game_loop(map, save, buffer);
     endwin();
     display_end_msg(ret);
+    my_free_array(map);
+    my_free_array(save);
     return (ret == -1) ? 1 : 0;
 }

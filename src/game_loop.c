@@ -9,8 +9,18 @@
 #include "struct.h"
 #include "game_loop.h"
 #include "my.h"
+#include <stdlib.h>
 
-void key_read(char **map, char **save, pos_t *pos)
+void reset_map(char *buffer, char **map, pos_t *pos)
+{
+    my_free_array(map);
+    map = NULL;
+    map = make_map_from_buffer(buffer);
+    free(pos);
+    pos = create_new_player(map);
+}
+
+void key_read(char **map, char **save, char *buffer, pos_t *pos)
 {
     int c = ERR;
 
@@ -23,9 +33,11 @@ void key_read(char **map, char **save, pos_t *pos)
         move_right(map, pos);
     if (c == KEY_LEFT && pos->x != 1)
         move_left(map, pos);
+    if (c == 32)
+        reset_map(buffer, map, pos);
 }
 
-int game_loop(char **map, char **save)
+int game_loop(char **map, char **save, char *buffer)
 {
     pos_t *p_pos = create_new_player(map);
     int status = 1;
@@ -33,7 +45,7 @@ int game_loop(char **map, char **save)
     while (status > 0) {
         display_map(map);
         refresh();
-        key_read(map, save, p_pos);
+        key_read(map, save, buffer, p_pos);
         status = check_game_status(map, save);
         refresh();
     }
