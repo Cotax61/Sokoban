@@ -19,7 +19,7 @@ void show_help(int ac, char **av)
     my_putstr("DESCRIPTION\n");
     my_putstr("    map  file representing the warehouse map, ");
     my_putstr("containing '#' for walls,\n         'P' for player, 'X'");
-    my_putstr(" for boxes and 'O' for storage location.\n");
+    my_putstr(" for boxes and 'O' for storage locations.\n");
 }
 
 void init_ncurse(void)
@@ -60,9 +60,10 @@ int main(int ac, char **av)
     char *buffer;
     int ret;
 
-    if (ac < 1)
+    if (ac <= 1)
         return (84);
-    show_help(ac, av);
+    if (my_strcmp(av[1], "-h") == 0)
+        show_help(ac, av);
     buffer = read_file(av[1]);
     map = make_map_from_buffer(buffer);
     init_game(map, save, buffer);
