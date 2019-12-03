@@ -7,13 +7,17 @@
 
 int check_unmovable_crates(char **map, int lines, int cols)
 {
-    if (map[lines - 1][cols] == '#' && map[lines][cols + 1] == '#')
+    if ((map[lines - 1][cols] == '#' || map[lines - 1][cols] == 'X') &&
+    (map[lines][cols + 1] == '#' || map[lines][cols + 1] == 'X'))
         return (1);
-    if (map[lines][cols + 1] == '#' && map[lines + 1][cols] == '#')
+    if ((map[lines][cols + 1] == '#' || map[lines][cols + 1] == 'X') &&
+    (map[lines + 1][cols] == '#' || map[lines + 1][cols] == '#'))
         return (1);
-    if (map[lines + 1][cols] == '#' && map[lines][cols - 1] == '#')
+    if ((map[lines + 1][cols] == '#' || map[lines + 1][cols] == 'X') &&
+    (map[lines][cols - 1] == '#' || map[lines][cols - 1] == 'X'))
         return (1);
-    if (map[lines][cols - 1] == '#' && map[lines - 1][cols] == '#')
+    if ((map[lines][cols - 1] == '#' || map[lines][cols - 1] == 'X') &&
+    (map[lines - 1][cols] == '#' || map[lines - 1][cols] == 'X'))
         return (1);
     return (0);
 }

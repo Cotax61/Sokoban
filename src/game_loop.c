@@ -49,5 +49,7 @@ int game_loop(char **map, char **save, char *buffer)
         status = check_game_status(map, save);
         refresh();
     }
+    display_map(map);
+    refresh();
     return (status);
 }
