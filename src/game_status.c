@@ -24,24 +24,24 @@ int check_unmovable_crates(char **map, int lines, int cols)
 
 int check_game_status(char **map, char **save)
 {
-    int cols = 0;
-    int lines = 0;
+    int pos[2] = {0, 0};
     int crates = 0;
     int unmovable = 0;
+    int sorted = 0;
 
-    for (; map[lines] != 0; cols++) {
-        if (map[lines][cols] == '\n' || map[lines][cols] == '\0') {
-            lines++;
-            cols = -1;
+    for (; map[pos[1]] != 0; pos[0]++) {
+        if (map[pos[1]][pos[0]] == '\n' || map[pos[1]][pos[0]] == '\0') {
+            pos[1]++;
+            pos[0] = -1;
             continue;
-        } else if (save[lines][cols] == 'O' && map[lines][cols] == ' ')
-            map[lines][cols] = 'O';
-        if (map[lines][cols] == 'X' && lines != 0 && cols != 0
-        && save[lines][cols] != 'O') {
+        } else if (save[pos[1]][pos[0]] == 'O' && map[pos[1]][pos[0]] == ' ')
+            map[pos[1]][pos[0]] = 'O';
+        if (map[pos[1]][pos[0]] == 'X' && pos[1] != 0 && pos[0] != 0) {
+            unmovable += check_unmovable_crates(map, pos[1], pos[0]);
             crates++;
-            unmovable += check_unmovable_crates(map, lines, cols);
+            sorted += (save[pos[1]][pos[0]] == 'O') ? 1 : 0;
         }
     }
-    unmovable = (unmovable == 0) ? -1 : unmovable;
-    return (crates == unmovable) ? -1 : crates;
+    sorted = (sorted == crates) ? 0 : 1;
+    return (crates == unmovable && sorted != 0) ? -1 : sorted;
 }

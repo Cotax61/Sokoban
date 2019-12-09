@@ -33,16 +33,6 @@ void init_ncurse(void)
     nodelay(win, false);
 }
 
-void display_end_msg(int msg_id)
-{
-    if (msg_id == -1)
-        my_putstr("Game Over (crates got stuck)\n");
-    else if (msg_id == 0)
-        my_putstr("You did it ! All crates are correctly sorted !\n");
-    else
-        my_put_error("Something went wrong.\n");
-}
-
 void init_game(char **map, char **save, char *buffer)
 {
     if (!check_map(map) || !check_map_char(map)) {
@@ -70,7 +60,6 @@ int main(int ac, char **av)
     save = make_map_from_buffer(buffer);
     ret = game_loop(map, save, buffer);
     endwin();
-    display_end_msg(ret);
     my_free_array(map);
     my_free_array(save);
     return (ret == -1) ? 1 : 0;

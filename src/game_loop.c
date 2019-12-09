@@ -47,7 +47,6 @@ int game_loop(char **map, char **save, char *buffer)
         refresh();
         key_read(map, save, buffer, p_pos);
         status = check_game_status(map, save);
-        refresh();
     }
     display_map(map);
     refresh();
